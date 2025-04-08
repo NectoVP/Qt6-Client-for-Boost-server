@@ -15,6 +15,9 @@
 #include <QScrollArea>
 #include <QMainWindow>
 #include <QScrollBar>
+#include <QScreen>
+#include <QPropertyAnimation>
+#include <QGraphicsOpacityEffect>
 
 #include <QDebug>
 
@@ -24,17 +27,21 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 
+#include <QThread>
+
 #include <iostream>
 
 #include "ImageHandler.h"
 #include "NetworkHandler.h"
+#include "OperationsHandler.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QUrl server_url, QWidget *parent);
+    MainWindow(QUrl server_url, QWidget *parent, size_t session_id);
 
+    virtual ~MainWindow();
 
 private:
     void init_ui();
@@ -42,21 +49,26 @@ private:
     void init_order_layout();
     void init_scroll_area();
 
+signals:
+    void init_desc();
+    void notify_operations_holder(int id);
+
+public slots:
+    void show_order_res(QString message, int result);
+    void handle_buy_fail(int id);
+
 private:
     QUrl server_url;
     NetworkHandler* network;
     QGridLayout* main_table;
+    QLabel* order_sum;
+    OperationsHandler* operations_handler;
     ImageHandler* image_handler;
     
     QWidget* window;
     QVBoxLayout* main_layout;
+    QString font_family;
 
-    QLabel* app_name_label;
-
-    QPushButton* pay_button;
-    QLabel* order_sum;
-    QHBoxLayout* order_layout;
-    
-    QScrollArea* scroll_area;
-    QWidget* scroll_widget;
+    QThread* network_thread;
+    size_t session_id;
 };

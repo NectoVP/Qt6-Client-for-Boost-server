@@ -10,10 +10,12 @@
 #include <QPushButton>
 #include <QApplication>
 #include <QFontDatabase>
+#include <QPropertyAnimation>
 
 #include <iostream>
 
 #include "NetworkHandler.h"
+#include "OperationsHandler.h"
 
 #pragma once
 
@@ -21,22 +23,26 @@ class ImageHandler : public QObject
 {
     Q_OBJECT
 public:
-    ImageHandler(QGridLayout* main_table): main_table(main_table) {}
+    ImageHandler(QGridLayout* main_table, OperationsHandler* operations_handl, size_t session_id);
 
 public slots:
-    void loadImage(NetworkHandler* network_handl);
-    void pay();
+    void loadImage(NetworkHandler* network_handl, int idx);
+    void update_text_desc(NetworkHandler* network_handl);
 
 signals:
 
 private:
     QImage convertToHighQualityJPEG(const QByteArray& pngData);
-
+    QPixmap roundCorners(const QPixmap& input, int radius);
     
 private:
     QGridLayout* main_table;
-    QVector<QPixmap> all_pixmaps;
     NetworkHandler* network_handl;
-    std::vector<size_t> item_costs;
-    int all_order = 0;
+    OperationsHandler* operations_handl;
+    size_t session_id;
+
+    QIcon plus_icon;
+    QIcon minus_icon;
+    QIcon plus_dark_icon;
+    QIcon minus_dark_icon;
 };

@@ -9,6 +9,8 @@ add_library(${PROJECT_NAME}
     NetworkHandler.cpp
     MainWindow.h
     MainWindow.cpp
+    OperationsHandler.h
+    OperationsHandler.cpp
 )
 
 set(CMAKE_AUTOMOC ON)
