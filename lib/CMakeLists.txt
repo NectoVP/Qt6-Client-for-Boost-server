@@ -7,6 +7,8 @@ add_library(${PROJECT_NAME}
     json.hpp
     NetworkHandler.h
     NetworkHandler.cpp
+    MainWindow.h
+    MainWindow.cpp
 )
 
 set(CMAKE_AUTOMOC ON)
