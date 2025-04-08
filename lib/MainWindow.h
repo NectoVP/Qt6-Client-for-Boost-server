@@ -1,0 +1,3 @@
+class MainWindow : public QMainWindow {
+    
+};
