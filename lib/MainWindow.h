@@ -57,6 +57,10 @@ public slots:
     void show_order_res(QString message, int result);
     void handle_buy_fail(int id);
 
+public:
+    //test_only
+    QGridLayout* get_grid_layout();
+
 private:
     QUrl server_url;
     NetworkHandler* network;

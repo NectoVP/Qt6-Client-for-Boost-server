@@ -148,8 +148,8 @@ MainWindow::~MainWindow() {
     delete image_handler;  
     delete window;
 
-    network_thread->wait();
     network_thread->quit();
+    network_thread->wait();
     delete network;
 }
 
@@ -183,4 +183,8 @@ void MainWindow::handle_buy_fail(int id) {
     order_result->show();
 
     emit notify_operations_holder(id);
+}
+
+QGridLayout* MainWindow::get_grid_layout() {
+    return main_table;
 }

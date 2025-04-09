@@ -9,6 +9,10 @@ set(CMAKE_AUTOUIC ON)
 
 add_executable(${PROJECT_NAME} main.cpp)
 add_subdirectory(lib)
+add_subdirectory(tests)
+
+enable_testing()
+
 
 target_link_libraries(${PROJECT_NAME} lib)
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets Qt6::Network)
