@@ -93,7 +93,7 @@ void MainWindow::init_order_layout() {
     order_sum_text->setFont(QFont(font_family, 30));
     order_sum_text->setStyleSheet("color: rgb(57, 234, 228);");
     order_sum_text->setAlignment(Qt::AlignCenter);
-    order_sum_text->setFixedSize(300, 75);
+    order_sum_text->setFixedSize(320, 75);
 
     order_sum->setFont(QFont(font_family, 30));
     order_sum->setStyleSheet("color: rgb(57, 234, 228);");
@@ -174,7 +174,7 @@ void MainWindow::handle_buy_fail(int id) {
     order_result->setStyleSheet("color: rgb(57, 234, 228); background-color:rgb(56, 56, 66); border-radius: 4px;");
     order_result->setFixedSize(700, 300);
 
-    order_result->setText("sorry, out of stock");
+    order_result->setText(QApplication::translate("mainlayout", "извините, нет в наличии"));
     order_result->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     connect(order_result, &QPushButton::pressed, order_result, &QPushButton::deleteLater);
     

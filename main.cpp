@@ -16,6 +16,9 @@
 
 #include <QDebug>
 
+#include <QTranslator>
+#include <QLocale>
+
 #include <QNetworkRequest>
 #include <QObject>
 #include <QByteArray>
@@ -32,6 +35,13 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+
+    QTranslator translator;
+    
+    if(QLocale().name() == "en_US") {
+        translator.load(QLocale(), "/home/nectovp/Code/cpp/qttest/build/en.qm");
+        //app.installTranslator(&translator);
+    }
 
     MainWindow main_window(QUrl("http://0.0.0.0:8080"), nullptr, std::stoi(std::string(argv[1]).c_str()));
     main_window.show();
