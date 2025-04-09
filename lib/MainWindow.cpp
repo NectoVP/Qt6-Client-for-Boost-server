@@ -1,6 +1,6 @@
 #include "MainWindow.h"
 
-MainWindow::MainWindow(QUrl server_url, QWidget *parent, size_t session_id) 
+MainWindow::MainWindow(QUrl server_url, QWidget *parent, size_t session_id, const std::string& locale) 
     : QMainWindow(parent)
     , server_url(server_url)
     , network(nullptr)
@@ -11,11 +11,12 @@ MainWindow::MainWindow(QUrl server_url, QWidget *parent, size_t session_id)
     , window(new QWidget(this))
     , main_layout(new QVBoxLayout(window))
     , network_thread(new QThread())
-    , session_id(session_id) {
+    , session_id(session_id)
+    , locale(locale) {
         
     QUrl get_items_url = server_url;
     get_items_url.setPath("/get_description");
-    network = new NetworkHandler(get_items_url);
+    network = new NetworkHandler(get_items_url, locale);
     operations_handler->network = network;
 
     network->moveToThread(network_thread);
@@ -159,7 +160,22 @@ void MainWindow::show_order_res(QString message, int result) {
     order_result->setStyleSheet("color: rgb(57, 234, 228); background-color:rgb(56, 56, 66); border-radius: 4px;");
     order_result->setFixedSize(700, 300);
 
-    order_result->setText(message);
+    auto find_order_id = [](const std::string& str) {
+        int digit_start = -1;
+        int digit_end = -1;
+        for(int i = 0; i < str.size(); ++i) {
+            if(std::isdigit(str[i])) {
+                if(digit_start == -1)
+                    digit_start = i;
+            } else if(digit_start != -1) {
+                digit_end = i - 1;
+                break;
+            }
+        }
+        return QString::fromStdString(str.substr(digit_start, digit_end - digit_start + 1));
+    };
+    
+    order_result->setText(QApplication::translate("mainlayout", "заказ ") + find_order_id(message.toStdString()) + QApplication::translate("mainlayout", " готов"));
     order_result->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     connect(order_result, &QPushButton::pressed, order_result, &QPushButton::deleteLater);
     

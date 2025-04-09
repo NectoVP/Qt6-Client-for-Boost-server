@@ -1,6 +1,6 @@
 #include "NetworkHandler.h"
 
-NetworkHandler::NetworkHandler(QUrl server_url, QObject *parent) : server_url(server_url), QObject(parent) {
+NetworkHandler::NetworkHandler(QUrl server_url, const std::string& locale, QObject *parent) : server_url(server_url), QObject(parent), locale(locale) {
 
 }
 
@@ -19,7 +19,7 @@ void NetworkHandler::parse_desc() {
     nlohmann::json temp_js = nlohmann::json::parse(s);
     for(auto &i : temp_js) {
         all_item_pic_urls.push_back(i["pic_url"].template get<std::string>());
-        all_item_names.push_back(i["name"].template get<std::string>());
+        all_item_names.push_back(i[locale + "_name"].template get<std::string>());
         all_item_cost.push_back(i["cost"].template get<size_t>());
         all_item_ids.push_back(i["id"].template get<size_t>());
         url_to_id.insert(std::make_pair(all_item_pic_urls.back(), all_item_pic_urls.size() - 1));

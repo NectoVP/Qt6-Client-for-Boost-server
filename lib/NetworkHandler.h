@@ -22,7 +22,7 @@ class NetworkHandler : public QObject
 {
     Q_OBJECT
 public:
-    explicit NetworkHandler(QUrl server_url, QObject *parent = 0);
+    explicit NetworkHandler(QUrl server_url, const std::string& locale, QObject *parent = 0);
     virtual ~NetworkHandler();
 
     const QVector<QByteArray>& get_pics_data();
@@ -63,4 +63,5 @@ private:
     QVector<QByteArray> all_item_pics;
     std::string last_request;
     int url_parsed = 0;
+    std::string locale;
 };

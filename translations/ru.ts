@@ -19,7 +19,17 @@
         <translation>Сумма заказа:</translation>
     </message>
     <message>
-        <location filename="../lib/MainWindow.cpp" line="177"/>
+        <location filename="../lib/MainWindow.cpp" line="178"/>
+        <source>заказ </source>
+        <translation>заказ </translation>
+    </message>
+    <message>
+        <location filename="../lib/MainWindow.cpp" line="178"/>
+        <source> готов</source>
+        <translation> готов</translation>
+    </message>
+    <message>
+        <location filename="../lib/MainWindow.cpp" line="193"/>
         <source>извините, нет в наличии</source>
         <translation>извините, нет в наличии</translation>
     </message>
