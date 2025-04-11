@@ -1,7 +1,7 @@
 #include "gui_tests.h"
 
 void TestGui::initTestCase() {
-    main_window = new MainWindow(QUrl("http://0.0.0.0:8080"), nullptr, 100);
+    main_window = new MainWindow(QUrl("http://0.0.0.0:8080"), nullptr, 100, "ru");
     main_window->show();
 
     QTest::qWait(10000);
@@ -33,7 +33,7 @@ void TestGui::testBuyOneItem() {
     QTest::qWait(2000);
     QApplication::processEvents();
 
-    QCOMPARE(current_order_sum->text(), QString("380"));
+    QCOMPARE(current_order_sum->text(), QString("730"));
 }
 
 void TestGui::testButManyItems() {
@@ -45,7 +45,7 @@ void TestGui::testButManyItems() {
     QTest::qWait(2000);
     QApplication::processEvents();
 
-    QCOMPARE(current_order_sum->text(), QString("2080"));
+    QCOMPARE(current_order_sum->text(), QString("1530"));
 };
 
 void TestGui::testRemoveOneItem() {
@@ -53,7 +53,7 @@ void TestGui::testRemoveOneItem() {
     QTest::qWait(2000);
     QApplication::processEvents();
 
-    QCOMPARE(current_order_sum->text(), QString("1700"));
+    QCOMPARE(current_order_sum->text(), QString("800"));
 }
 void TestGui::testRemoveManyItems() {
     QTest::mouseClick(second_burger_minus, Qt::LeftButton);
@@ -86,7 +86,7 @@ void TestGui::testMakeOrder() {
     
     QVERIFY(orderResult != nullptr);
     QVERIFY(orderResult->isVisible());
-    QCOMPARE(orderResult->text(), QString("order 100 is ready"));
+    QCOMPARE(orderResult->text(), QString("заказ 100 готов"));
     QCOMPARE(current_order_sum->text(), QString("0"));
     
     if (orderResult)
@@ -113,7 +113,7 @@ void TestGui::testTwoMakeOrders() {
     
     QVERIFY(orderResult != nullptr);
     QVERIFY(orderResult->isVisible());
-    QCOMPARE(orderResult->text(), QString("order 101 is ready"));
+    QCOMPARE(orderResult->text(), QString("заказ 101 готов"));
     
     if (orderResult)
         orderResult->deleteLater();
@@ -141,7 +141,7 @@ void TestGui::testTwoMakeOrders() {
     
     QVERIFY(second_orderResult != nullptr);
     QVERIFY(second_orderResult->isVisible());
-    QCOMPARE(second_orderResult->text(), QString("order 102 is ready"));
+    QCOMPARE(second_orderResult->text(), QString("заказ 102 готов"));
     
     if (second_orderResult)
         second_orderResult->deleteLater();
@@ -149,7 +149,7 @@ void TestGui::testTwoMakeOrders() {
 }
 
 void TestGui::testBuyingTooMany() {
-    for(int i = 0; i < 8; ++i) {
+    for(int i = 0; i < 13; ++i) {
         QTest::mouseClick(second_burger_plus, Qt::LeftButton);
         QTest::qWait(2000);
         QApplication::processEvents();
@@ -165,21 +165,21 @@ void TestGui::testBuyingTooMany() {
 
     QVERIFY(orderResult != nullptr);
     QVERIFY(orderResult->isVisible());
-    QCOMPARE(orderResult->text(), QString("sorry, out of stock"));
+    QCOMPARE(orderResult->text(), QString("извините, нет в наличии"));
 
     if (orderResult)
         orderResult->deleteLater();
     
-    QCOMPARE(current_order_sum->text(), QString("5950"));
+    QCOMPARE(current_order_sum->text(), QString("4800"));
 }
 void TestGui::testRemovingWrong() {
     QTest::mouseClick(first_burger_minus, Qt::LeftButton);
     QTest::qWait(2000);
     QApplication::processEvents();
 
-    QCOMPARE(current_order_sum->text(), QString("5950"));
+    QCOMPARE(current_order_sum->text(), QString("4800"));
 
-    for(int i = 0; i < 8; ++i) {
+    for(int i = 0; i < 13; ++i) {
         QTest::mouseClick(second_burger_minus, Qt::LeftButton);
         QTest::qWait(2000);
         QApplication::processEvents();
