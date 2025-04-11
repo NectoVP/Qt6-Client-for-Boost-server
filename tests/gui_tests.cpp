@@ -1,7 +1,8 @@
 #include "gui_tests.h"
 
 void TestGui::initTestCase() {
-    main_window = new MainWindow(QUrl("http://0.0.0.0:8080"), nullptr, 100, "ru");
+    std::string path = "/home/nectovp/Code/cpp/qttest/";
+    main_window = new MainWindow(QUrl("http://0.0.0.0:8080"), nullptr, 100, "ru", path);
     main_window->show();
 
     QTest::qWait(10000);

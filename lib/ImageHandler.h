@@ -23,7 +23,7 @@ class ImageHandler : public QObject
 {
     Q_OBJECT
 public:
-    ImageHandler(QGridLayout* main_table, OperationsHandler* operations_handl, size_t session_id);
+    ImageHandler(QGridLayout* main_table, OperationsHandler* operations_handl, size_t session_id, const std::string& path);
 
 public slots:
     void loadImage(NetworkHandler* network_handl, int idx);
@@ -45,4 +45,6 @@ private:
     QIcon minus_icon;
     QIcon plus_dark_icon;
     QIcon minus_dark_icon;
+
+    std::string path;
 };

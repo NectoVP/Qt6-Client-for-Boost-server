@@ -1,17 +1,18 @@
 #include "ImageHandler.h"
 
-ImageHandler::ImageHandler(QGridLayout* main_table, OperationsHandler* operations_handl, size_t session_id)
+ImageHandler::ImageHandler(QGridLayout* main_table, OperationsHandler* operations_handl, size_t session_id, const std::string& path)
     : main_table(main_table)
-    , plus_icon("/home/nectovp/Code/cpp/qttest/resources/icons/plus_icon.png")
-    , minus_icon("/home/nectovp/Code/cpp/qttest/resources/icons/minus_icon.png")
-    , plus_dark_icon("/home/nectovp/Code/cpp/qttest/resources/icons/plus_dark_icon.png")
-    , minus_dark_icon("/home/nectovp/Code/cpp/qttest/resources/icons/minus_dark_icon.png")
+    , plus_icon((path + "resources/icons/plus_icon.png").c_str())
+    , minus_icon((path + "resources/icons/minus_icon.png").c_str())
+    , plus_dark_icon((path + "resources/icons/plus_dark_icon.png").c_str())
+    , minus_dark_icon((path + "resources/icons/minus_dark_icon.png").c_str())
     , operations_handl(operations_handl)
-    , session_id(session_id) {
+    , session_id(session_id)
+    , path(path) {
     }
 
 void ImageHandler::update_text_desc(NetworkHandler* network_handl) {
-    int font_id = QFontDatabase::addApplicationFont("/home/nectovp/Code/cpp/qttest/resources/fonts/AmericanCaptainPatrius02Fre-PvPd.ttf");
+    int font_id = QFontDatabase::addApplicationFont((path + "resources/fonts/AmericanCaptainPatrius02Fre-PvPd.ttf").c_str());
     QString font_family = QFontDatabase::applicationFontFamilies(font_id).at(0);
 
     const std::vector<std::string>& name_vec = network_handl->get_names();
@@ -27,7 +28,7 @@ void ImageHandler::update_text_desc(NetworkHandler* network_handl) {
         main_table->addWidget(label_name, i / 4 * 3, i % 4 * 3, 1, 3, Qt::AlignHCenter);
      
         QLabel *label_pic = new QLabel();
-        QPixmap temp_pix("/home/nectovp/Code/cpp/qttest/resources/icons/loading2.png");
+        QPixmap temp_pix((path + "resources/icons/loading2.png").c_str());
         temp_pix = temp_pix.scaled(286, 290, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         label_pic->setPixmap(temp_pix);
         label_pic->setFixedSize(286, 290);

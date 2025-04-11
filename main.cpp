@@ -35,17 +35,19 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    
+    std::string path = "/home/nectovp/Code/cpp/qttest/";
 
     QTranslator translator;
     
     QString current_locale = QLocale().name();
     //current_locale = "ru_RU";
     if(current_locale == "en_US") {
-        auto load_res = translator.load(QLocale(), "/home/nectovp/Code/cpp/qttest/build/en.qm");
+        auto load_res = translator.load(QLocale(), std::string(path + "build/en.qm").c_str());
         app.installTranslator(&translator);
     }
 
-    MainWindow main_window(QUrl("http://0.0.0.0:8080"), nullptr, std::stoi(std::string(argv[1]).c_str()), current_locale.toStdString().substr(0, 2));
+    MainWindow main_window(QUrl("http://0.0.0.0:8080"), nullptr, std::stoi(std::string(argv[1]).c_str()), current_locale.toStdString().substr(0, 2), path);
     main_window.show();
 
     return app.exec();

@@ -39,7 +39,7 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QUrl server_url, QWidget *parent, size_t session_id, const std::string& locale);
+    MainWindow(QUrl server_url, QWidget *parent, size_t session_id, const std::string& locale, const std::string& path);
 
     virtual ~MainWindow();
 
@@ -76,4 +76,5 @@ private:
     QThread* network_thread;
     size_t session_id;
     std::string locale;
+    std::string path;
 };

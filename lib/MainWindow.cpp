@@ -1,18 +1,19 @@
 #include "MainWindow.h"
 
-MainWindow::MainWindow(QUrl server_url, QWidget *parent, size_t session_id, const std::string& locale) 
+MainWindow::MainWindow(QUrl server_url, QWidget *parent, size_t session_id, const std::string& locale, const std::string& path) 
     : QMainWindow(parent)
     , server_url(server_url)
     , network(nullptr)
     , main_table(new QGridLayout())
     , order_sum(new QLabel("0"))
     , operations_handler(new OperationsHandler(order_sum, network))
-    , image_handler(new ImageHandler(main_table, operations_handler, session_id))
+    , image_handler(new ImageHandler(main_table, operations_handler, session_id, path))
     , window(new QWidget(this))
     , main_layout(new QVBoxLayout(window))
     , network_thread(new QThread())
     , session_id(session_id)
-    , locale(locale) {
+    , locale(locale)
+    , path(path) {
         
     QUrl get_items_url = server_url;
     get_items_url.setPath("/get_description");
@@ -39,7 +40,7 @@ MainWindow::MainWindow(QUrl server_url, QWidget *parent, size_t session_id, cons
 }
 
 void MainWindow::init_ui() {
-    int font_id = QFontDatabase::addApplicationFont("/home/nectovp/Code/cpp/qttest/resources/fonts/AmericanCaptainPatrius02Fre-PvPd.ttf");
+    int font_id = QFontDatabase::addApplicationFont((path + "resources/fonts/AmericanCaptainPatrius02Fre-PvPd.ttf").c_str());
     font_family = QFontDatabase::applicationFontFamilies(font_id).at(0);
 
     QPalette palette(QColor("#252b35"));
@@ -61,7 +62,7 @@ void MainWindow::init_ui() {
 
 void MainWindow::init_main_label() {
     QLabel* app_name_pic_label = new QLabel();
-    QPixmap app_name_pixmap("/home/nectovp/Code/cpp/qttest/resources/icons/Vkusno_I_Tochka_symbol.png");
+    QPixmap app_name_pixmap((path + "resources/icons/Vkusno_I_Tochka_symbol.png").c_str());
     app_name_pixmap = app_name_pixmap.scaled(100, 100, Qt::KeepAspectRatio);
     app_name_pic_label->setPixmap(app_name_pixmap);
     app_name_pic_label->setScaledContents(true);
