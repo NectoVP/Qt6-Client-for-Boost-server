@@ -152,7 +152,7 @@ void TestGui::testTwoMakeOrders() {
 void TestGui::testBuyingTooMany() {
     for(int i = 0; i < 13; ++i) {
         QTest::mouseClick(second_burger_plus, Qt::LeftButton);
-        QTest::qWait(2000);
+        QTest::qWait(500);
         QApplication::processEvents();
     }
 
@@ -182,7 +182,7 @@ void TestGui::testRemovingWrong() {
 
     for(int i = 0; i < 13; ++i) {
         QTest::mouseClick(second_burger_minus, Qt::LeftButton);
-        QTest::qWait(2000);
+        QTest::qWait(500);
         QApplication::processEvents();
     }
 
